@@ -2,6 +2,8 @@
   "name": "azure-federated-auth-task",
   "version": "1.0.5",
   "private": true,
+  "author": "Slawomir Koszewski",
+  "license": "MIT",
   "description": "Azure DevOps task to fetch OIDC token for AzureRM service connection.",
   "main": "dist/index.js",
   "scripts": {

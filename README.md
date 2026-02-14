@@ -64,3 +64,11 @@ You can publish the generated `.vsix` manually in the Visual Studio Marketplace 
 See `examples/azure-pipelines-smoke.yml` for a full smoke validation pipeline.
 
 When `setGitAccessToken: true`, the task exchanges the OIDC assertion against Entra ID and requests scope `499b84ac-1321-427f-aa17-267ca6975798/.default`, then sets `GIT_ACCESS_TOKEN`.
+
+## Author
+
+Slawomir Koszewski
+
+## License
+
+MIT. See `LICENSE`.

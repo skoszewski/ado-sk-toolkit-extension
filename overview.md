@@ -48,3 +48,11 @@ It is designed for pipelines that need ARM federation variables without storing 
 ## Repository
 
 https://gitea.koszewscy.waw.pl/koszewscy/ado-azurefederatedauth-task.git
+
+## Author
+
+Slawomir Koszewski
+
+## License
+
+MIT. See `LICENSE`.

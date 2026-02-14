@@ -6,7 +6,7 @@
   "description": "Gets OIDC token and sets ARM vars (optionally GIT_ACCESS_TOKEN).",
   "helpMarkDown": "For details, see: https://gitea.koszewscy.waw.pl/koszewscy/ado-azurefederatedauth-task.git",
   "category": "Deploy",
-  "author": "skoszewski-lab",
+  "author": "Slawomir Koszewski",
   "version": {
     "Major": 1,
     "Minor": 0,
