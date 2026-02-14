@@ -1,6 +1,6 @@
 {
   "name": "azure-federated-auth-task",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "private": true,
   "description": "Azure DevOps task to fetch OIDC token for AzureRM service connection.",
   "main": "dist/index.js",
