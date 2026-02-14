@@ -3,16 +3,16 @@
   "id": "11c532b8-f2bd-45f8-ac94-3b7e44608cc4",
   "name": "AzureFederatedAuth",
   "friendlyName": "Azure Federated Auth",
-  "description": "Requests an OIDC token for an AzureRM service connection and exports ARM_OIDC_TOKEN, ARM_TENANT_ID, ARM_CLIENT_ID, and optionally GIT_ACCESS_TOKEN for Azure DevOps Git HTTPS auth.",
-  "helpMarkDown": "Private task for YAML pipelines on Linux agents.",
+  "description": "Gets OIDC token and sets ARM vars (optionally GIT_ACCESS_TOKEN).",
+  "helpMarkDown": "For details, see: https://gitea.koszewscy.waw.pl/koszewscy/ado-azurefederatedauth-task.git",
   "category": "Deploy",
-  "author": "private",
+  "author": "skoszewski-lab",
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 0
+    "Patch": 3
   },
-  "instanceNameFormat": "Configure Azure federated auth for $(serviceConnectionARM)",
+  "instanceNameFormat": "Configure federated auth: $(serviceConnectionARM)",
   "inputs": [
     {
       "name": "serviceConnectionARM",
@@ -25,10 +25,10 @@
     {
       "name": "setGitAccessToken",
       "type": "boolean",
-      "label": "Also set GIT_ACCESS_TOKEN for Azure DevOps Git HTTPS auth",
+      "label": "Set GIT_ACCESS_TOKEN for Azure DevOps Git",
       "defaultValue": "false",
       "required": false,
-      "helpMarkDown": "When enabled, exchanges the OIDC token for an Entra access token scoped to Azure DevOps (499b84ac-1321-427f-aa17-267ca6975798/.default) and sets secret variable GIT_ACCESS_TOKEN."
+      "helpMarkDown": "Exchange OIDC for Azure DevOps scope and set secret GIT_ACCESS_TOKEN."
     }
   ],
   "execution": {

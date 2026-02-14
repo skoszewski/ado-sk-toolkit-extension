@@ -1,6 +1,6 @@
 # Azure DevOps Azure Federated Auth Task
 
-Private Azure DevOps extension with a single task: `AzureFederatedAuth@1`.
+Azure DevOps extension with a single task: `AzureFederatedAuth@1`.
 
 The task requests an OIDC token for a selected AzureRM service connection and exports:
 
@@ -14,7 +14,7 @@ The task requests an OIDC token for a selected AzureRM service connection and ex
 - Linux agents (YAML pipelines)
 - Job setting that exposes OAuth token (`System.AccessToken`)
 - AzureRM service connection with workload identity federation
-- Visual Studio Marketplace publisher account (required to publish/share this extension, even for private org-only usage)
+- Visual Studio Marketplace publisher account (required to publish/share this extension, including org-only usage)
 
 ## Build
 

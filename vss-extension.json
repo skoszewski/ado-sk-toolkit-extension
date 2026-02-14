@@ -2,14 +2,19 @@
   "manifestVersion": 1,
   "id": "azuredevops-get-oidc-token-task",
   "name": "Azure DevOps AzureFederatedAuth Task",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "publisher": "skoszewski-lab",
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "description": "Private Azure DevOps task to request an OIDC token for an AzureRM service connection and expose Terraform ARM variables.",
+  "description": "Azure DevOps task to request an OIDC token for an AzureRM service connection and expose Terraform ARM variables.",
+  "content": {
+    "details": {
+      "path": "overview.md"
+    }
+  },
   "categories": [
     "Azure Pipelines"
   ],
@@ -23,6 +28,10 @@
     },
     {
       "path": "images",
+      "addressable": true
+    },
+    {
+      "path": "overview.md",
       "addressable": true
     }
   ],
