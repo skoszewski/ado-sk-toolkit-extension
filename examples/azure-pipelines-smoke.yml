@@ -19,6 +19,7 @@ steps:
         echo "ARM_OIDC_TOKEN is missing"
         exit 1
       fi
+      echo "Token Hash: $(echo -n $ARM_OIDC_TOKEN | sha256sum | awk '{print $1}')"
 
       if [[ -z "${ARM_TENANT_ID:-}" ]]; then
         echo "ARM_TENANT_ID is missing"
@@ -29,13 +30,17 @@ steps:
         echo "ARM_CLIENT_ID is missing"
         exit 1
       fi
+      echo "ARM variables are populated."
+      echo "Tenant: $ARM_TENANT_ID"
+      echo "Client: $ARM_CLIENT_ID"
 
       if [[ -z "${GIT_ACCESS_TOKEN:-}" ]]; then
         echo "GIT_ACCESS_TOKEN is missing"
         exit 1
       fi
+      echo "Git Access Token Hash: $(echo -n $GIT_ACCESS_TOKEN | sha256sum | awk '{print $1}')"
 
-      echo "ARM variables are populated."
-      echo "Tenant: $ARM_TENANT_ID"
-      echo "Client: $ARM_CLIENT_ID"
     displayName: Validate exported variables
+    env:
+      ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
+      GIT_ACCESS_TOKEN: $(GIT_ACCESS_TOKEN)
