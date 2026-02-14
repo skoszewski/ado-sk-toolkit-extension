@@ -1,0 +1,5 @@
+node_modules/
+*.vsix
+task/AzureFederatedAuth/dist/
+build/
+AGENTS.md

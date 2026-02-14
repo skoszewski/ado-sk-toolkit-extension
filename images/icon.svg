@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Azure Git Federation">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0078D4"/>
+      <stop offset="100%" stop-color="#004E8C"/>
+    </linearGradient>
+    <linearGradient id="azureFacet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9AD7FF"/>
+      <stop offset="100%" stop-color="#59B9FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="240" height="240" rx="40" fill="url(#bg)"/>
+  <rect x="8" y="8" width="240" height="240" rx="40" fill="none" stroke="#9ED8FF" stroke-opacity="0.35" stroke-width="2"/>
+
+  <path d="M48 196 L100 56 L130 56 L78 196 Z" fill="url(#azureFacet)"/>
+  <path d="M114 196 L164 76 L208 196 Z" fill="#D9F1FF" fill-opacity="0.92"/>
+
+  <!-- Federation links moved up to avoid overlap with Git branches -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M84 128 C84 114 96 104 110 104 L120 104" stroke="#FFD9A3" stroke-width="12"/>
+    <path d="M172 128 C172 114 160 104 146 104 L136 104" stroke="#FFD9A3" stroke-width="12"/>
+    <path d="M84 128 C84 142 96 152 110 152 L120 152" stroke="#FFC266" stroke-width="12"/>
+    <path d="M172 128 C172 142 160 152 146 152 L136 152" stroke="#FFC266" stroke-width="12"/>
+  </g>
+
+  <g stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" fill="none">
+    <path d="M70 208 V170 H102"/>
+    <path d="M186 208 V170 H154"/>
+    <path d="M128 208 V178"/>
+  </g>
+
+  <g fill="#FFB347" stroke="#FFFFFF" stroke-width="5">
+    <circle cx="70" cy="208" r="10"/>
+    <circle cx="128" cy="208" r="10"/>
+    <circle cx="186" cy="208" r="10"/>
+    <circle cx="128" cy="178" r="10"/>
+  </g>
+</svg>

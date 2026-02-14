@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "11c532b8-f2bd-45f8-ac94-3b7e44608cc4",
+  "name": "AzureFederatedAuth",
+  "friendlyName": "Azure Federated Auth",
+  "description": "Requests an OIDC token for an AzureRM service connection and exports ARM_OIDC_TOKEN, ARM_TENANT_ID, ARM_CLIENT_ID, and optionally GIT_ACCESS_TOKEN for Azure DevOps Git HTTPS auth.",
+  "helpMarkDown": "Private task for YAML pipelines on Linux agents.",
+  "category": "Deploy",
+  "author": "private",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Configure Azure federated auth for $(serviceConnectionARM)",
+  "inputs": [
+    {
+      "name": "serviceConnectionARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Resource Manager service connection",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "AzureRM service connection used to request the OIDC token."
+    },
+    {
+      "name": "setGitAccessToken",
+      "type": "boolean",
+      "label": "Also set GIT_ACCESS_TOKEN for Azure DevOps Git HTTPS auth",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "When enabled, exchanges the OIDC token for an Entra access token scoped to Azure DevOps (499b84ac-1321-427f-aa17-267ca6975798/.default) and sets secret variable GIT_ACCESS_TOKEN."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "minimumAgentVersion": "3.225.0"
+}
