@@ -39,7 +39,7 @@ AZDO_PAT='<your-pat>' ./scripts/publish.sh <vsix-path> <publisher-id> <org1> <or
 Example:
 
 ```bash
-AZDO_PAT="$AZDO_PAT" ./scripts/publish.sh ./build/private.azuredevops-get-oidc-token-task-1.0.0.vsix private org-a org-b org-c
+AZDO_PAT="$AZDO_PAT" ./scripts/publish.sh ./build/skoszewski-lab.azuredevops-get-oidc-token-task-1.0.0.vsix skoszewski-lab org-a org-b org-c
 ```
 
 ### Manual publish (Web UI)

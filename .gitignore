@@ -3,3 +3,4 @@ node_modules/
 task/AzureFederatedAuth/dist/
 build/
 AGENTS.md
+.DS_Store
