@@ -141,6 +141,7 @@ async function run(): Promise<void> {
   try {
     const endpointId = tl.getInput('serviceConnectionARM', true);
     const setGitAccessToken = tl.getBoolInput('setGitAccessToken', false);
+    const printTokenHashes = tl.getBoolInput('printTokenHashes', false);
     if (!endpointId) {
       throw new Error('Task input serviceConnectionARM is required.');
     }
@@ -154,21 +155,24 @@ async function run(): Promise<void> {
     const token = await requestOidcToken(requestUrl, accessToken);
     const metadata = getServiceConnectionMetadata(endpointId);
 
-    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-
     tl.setVariable('ARM_OIDC_TOKEN', token, true);
     tl.setVariable('ARM_TENANT_ID', metadata.tenantId);
     tl.setVariable('ARM_CLIENT_ID', metadata.clientId);
 
     console.log('Successfully retrieved OIDC token.');
-    console.log(`OIDC Token SHA256: ${tokenHash}`);
+    if (printTokenHashes) {
+      const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+      console.log(`OIDC Token SHA256: ${tokenHash}`);
+    }
 
     if (setGitAccessToken) {
       console.log('Exchanging OIDC token for Azure DevOps scoped Git access token...');
       const gitToken = await exchangeOidcForAzureDevOpsToken(metadata.tenantId, metadata.clientId, token);
-      const gitTokenHash = crypto.createHash('sha256').update(gitToken).digest('hex');
       tl.setVariable('GIT_ACCESS_TOKEN', gitToken, true);
-      console.log(`GIT Access Token SHA256: ${gitTokenHash}`);
+      if (printTokenHashes) {
+        const gitTokenHash = crypto.createHash('sha256').update(gitToken).digest('hex');
+        console.log(`GIT Access Token SHA256: ${gitTokenHash}`);
+      }
     }
 
     tl.setResult(tl.TaskResult.Succeeded, 'ARM OIDC variables configured.');

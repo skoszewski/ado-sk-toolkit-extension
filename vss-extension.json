@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "azuredevops-get-oidc-token-task",
   "name": "Azure DevOps AzureFederatedAuth Task",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "skoszewski-lab",
   "targets": [
     {

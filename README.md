@@ -39,7 +39,7 @@ AZDO_PAT='<your-pat>' ./scripts/publish.sh <vsix-path> <publisher-id> <org1> <or
 Example:
 
 ```bash
-AZDO_PAT="$AZDO_PAT" ./scripts/publish.sh ./build/skoszewski-lab.azuredevops-get-oidc-token-task-1.0.3.vsix skoszewski-lab org-a org-b org-c
+AZDO_PAT="$AZDO_PAT" ./scripts/publish.sh ./build/skoszewski-lab.azuredevops-get-oidc-token-task-1.0.5.vsix skoszewski-lab org-a org-b org-c
 ```
 
 ### Manual publish (Web UI)
@@ -58,6 +58,7 @@ You can publish the generated `.vsix` manually in the Visual Studio Marketplace 
   inputs:
     serviceConnectionARM: 'my-arm-service-connection'
     setGitAccessToken: true
+    printTokenHashes: false
 ```
 
 See `examples/azure-pipelines-smoke.yml` for a full smoke validation pipeline.

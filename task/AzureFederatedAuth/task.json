@@ -10,7 +10,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 4
+    "Patch": 5
   },
   "instanceNameFormat": "Configure federated auth: $(serviceConnectionARM)",
   "inputs": [
@@ -29,6 +29,14 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Exchange OIDC for Azure DevOps scope and set secret GIT_ACCESS_TOKEN."
+    },
+    {
+      "name": "printTokenHashes",
+      "type": "boolean",
+      "label": "Print SHA256 token hashes to logs",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "When enabled, prints SHA256 hashes of ARM_OIDC_TOKEN and GIT_ACCESS_TOKEN (if requested)."
     }
   ],
   "execution": {
