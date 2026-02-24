@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "azuredevops-get-oidc-token-task",
-  "name": "Azure DevOps AzureFederatedAuth Task",
+  "name": "SK Azure DevOps Toolkit",
   "version": "1.0.5",
   "publisher": "skoszewski-lab",
   "targets": [
@@ -9,7 +9,7 @@
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "description": "Azure DevOps task to request an OIDC token for an AzureRM service connection and expose Terraform ARM variables.",
+  "description": "Azure DevOps tasks implementing missing Azure DevOps functionality.",
   "content": {
     "details": {
       "path": "overview.md"
@@ -25,6 +25,9 @@
   "files": [
     {
       "path": "task/AzureFederatedAuth"
+    },
+    {
+      "path": "task/CopyBlob"
     },
     {
       "path": "images",
@@ -44,6 +47,16 @@
       ],
       "properties": {
         "name": "task/AzureFederatedAuth"
+      }
+    },
+    {
+      "id": "b80bb228-7c95-4d43-a8fa-0607f14f9c48",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "task/CopyBlob"
       }
     }
   ]

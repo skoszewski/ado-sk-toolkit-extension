@@ -1,27 +1,18 @@
-# Azure Federated Auth Task
+# SK Azure DevOps Toolkit
 
-`AzureFederatedAuth@1` is an Azure Pipelines task that requests an OIDC token for an AzureRM service connection configured for workload identity federation.
+Azure DevOps extension with two pipeline tasks:
 
-It is designed for pipelines that need ARM federation variables without storing long-lived secrets.
-
-## What It Sets
-
-- `ARM_OIDC_TOKEN` (secret)
-- `ARM_TENANT_ID`
-- `ARM_CLIENT_ID`
-- `GIT_ACCESS_TOKEN` (secret, optional)
-
-## Task Input
-
-- `serviceConnectionARM` (required): Azure Resource Manager service connection
-- `setGitAccessToken` (optional): exchanges OIDC assertion for Azure DevOps scope and sets `GIT_ACCESS_TOKEN`
-- `printTokenHashes` (optional, default `false`): prints SHA256 token hashes in logs
+- `AzureFederatedAuth@1` - requests OIDC token for an AzureRM service connection (workload identity federation) and sets:
+  - `ARM_OIDC_TOKEN` (secret)
+  - `ARM_TENANT_ID`
+  - `ARM_CLIENT_ID`
+  - `GIT_ACCESS_TOKEN` (secret, optional)
+- `CopyBlob@1` - copies a blob between Azure Storage accounts/containers using the selected AzureRM service connection.
 
 ## Prerequisites
 
-- AzureRM service connection using workload identity federation
+- AzureRM service connection configured for workload identity federation
 - Pipeline access to `System.AccessToken`
-- Linux YAML agents
 
 ## Example
 
@@ -30,24 +21,20 @@ It is designed for pipelines that need ARM federation variables without storing 
   inputs:
     serviceConnectionARM: 'my-arm-service-connection'
     setGitAccessToken: true
-    printTokenHashes: false
 
-- bash: |
-    echo "Tenant: $ARM_TENANT_ID"
-    if [[ ! "$ARM_CLIENT_ID" =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
-      echo "ARM_CLIENT_ID is missing or not a GUID"
-      exit 1
-    fi
-    test -n "${ARM_OIDC_TOKEN:-}" && echo "ARM_OIDC_TOKEN is set and not empty"
-    test -n "${GIT_ACCESS_TOKEN:-}" && echo "GIT_ACCESS_TOKEN is set and not empty"
-  env:
-    ARM_OIDC_TOKEN: $(ARM_OIDC_TOKEN)
-    GIT_ACCESS_TOKEN: $(GIT_ACCESS_TOKEN)
+- task: CopyBlob@1
+  inputs:
+    serviceConnectionARM: 'my-arm-service-connection'
+    srcStorageAccountName: 'srcaccount'
+    dstStorageAccountName: 'dstaccount'
+    srcContainerName: 'tfstate'
+    dstContainerName: 'tfstate-backup'
+    blobName: 'lz.tfstate'
 ```
 
 ## Repository
 
-https://gitea.koszewscy.waw.pl/koszewscy/ado-azurefederatedauth-task.git
+https://gitea.koszewscy.waw.pl/koszewscy/ado-sk-toolkit-extension.git
 
 ## Author
 

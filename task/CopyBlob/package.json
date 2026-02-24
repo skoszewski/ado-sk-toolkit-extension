@@ -1,10 +1,10 @@
 {
-  "name": "azure-federated-auth-task",
-  "version": "1.0.5",
+  "name": "copy-blob-task",
+  "version": "1.0.0",
   "private": true,
   "author": "Slawomir Koszewski",
   "license": "MIT",
-  "description": "Azure DevOps task to fetch OIDC token for AzureRM service connection.",
+  "description": "Azure DevOps task to copy a blob between Azure Storage accounts using ARM OIDC variables.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",

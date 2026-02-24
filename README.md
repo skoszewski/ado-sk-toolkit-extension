@@ -1,8 +1,11 @@
-# Azure DevOps Azure Federated Auth Task
+# Azure DevOps Federated Auth Toolkit
 
-Azure DevOps extension with a single task: `AzureFederatedAuth@1`.
+Azure DevOps extension with two tasks:
 
-The task requests an OIDC token for a selected AzureRM service connection and exports:
+- `AzureFederatedAuth@1`
+- `CopyBlob@1`
+
+`AzureFederatedAuth@1` requests an OIDC token for a selected AzureRM service connection and exports:
 
 - `ARM_OIDC_TOKEN` (secret)
 - `ARM_TENANT_ID`
@@ -59,6 +62,15 @@ You can publish the generated `.vsix` manually in the Visual Studio Marketplace 
     serviceConnectionARM: 'my-arm-service-connection'
     setGitAccessToken: true
     printTokenHashes: false
+
+- task: CopyBlob@1
+  inputs:
+    serviceConnectionARM: 'my-arm-service-connection'
+    srcStorageAccountName: 'srcaccount'
+    dstStorageAccountName: 'dstaccount'
+    srcContainerName: 'tfstate'
+    dstContainerName: 'tfstate-backup'
+    blobName: 'lz.tfstate'
 ```
 
 See `examples/azure-pipelines-smoke.yml` for a full smoke validation pipeline.

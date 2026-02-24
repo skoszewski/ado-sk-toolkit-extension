@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "553f4f1d-d629-4e8c-ac0c-272d54787f77",
+  "name": "CopyBlob",
+  "friendlyName": "Copy Blob",
+  "description": "Copies a blob from source to destination using OIDC from the selected AzureRM service connection.",
+  "helpMarkDown": "Uses serviceConnectionARM to request OIDC token and copy blob via Azure Storage REST API.",
+  "category": "Deploy",
+  "author": "Slawomir Koszewski",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Copy blob: $(srcStorageAccountName)/$(srcContainerName)/$(blobName)",
+  "inputs": [
+    {
+      "name": "serviceConnectionARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Resource Manager service connection",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "AzureRM service connection used to request OIDC token and resolve tenant/client metadata. Requires System.AccessToken to be available to the job."
+    },
+    {
+      "name": "srcStorageAccountName",
+      "type": "string",
+      "label": "Source Storage Account Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Source storage account name (without domain)."
+    },
+    {
+      "name": "dstStorageAccountName",
+      "type": "string",
+      "label": "Destination Storage Account Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Destination storage account name (without domain)."
+    },
+    {
+      "name": "srcContainerName",
+      "type": "string",
+      "label": "Source Container Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Source container name."
+    },
+    {
+      "name": "dstContainerName",
+      "type": "string",
+      "label": "Destination Container Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Destination container name. If empty, source container name is used."
+    },
+    {
+      "name": "blobName",
+      "type": "string",
+      "label": "Blob Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Blob path/name to copy."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "dist/index.js"
+    }
+  },
+  "minimumAgentVersion": "3.225.0"
+}
