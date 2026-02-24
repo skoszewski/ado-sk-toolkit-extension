@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "sk-azure-devops-toolkit",
   "name": "SK Azure DevOps Toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "skoszewski-lab",
   "targets": [
     {
