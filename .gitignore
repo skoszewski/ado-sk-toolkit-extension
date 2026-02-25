@@ -5,3 +5,4 @@ task/AzureFederatedAuth/dist/
 build/
 AGENTS.md
 .DS_Store
+.env
