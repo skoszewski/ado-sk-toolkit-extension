@@ -11,6 +11,7 @@ Azure DevOps extension with pipeline tasks for federated auth and blob/state ope
 - `ListBlobs@1` - lists blobs in a container (optional prefix) using the selected AzureRM service connection.
 - `GetBlob@1` - downloads a blob to a local file path using the selected AzureRM service connection.
 - `PutBlob@1` - uploads a local file as a blob using the selected AzureRM service connection.
+- `SetupGitHubRelease@1` - downloads and installs a binary from the latest GitHub release and prepends it to PATH.
 
 Implementation note: task shared helpers are packaged locally during build and bundled with the extension (no external package registry access required at runtime).
 

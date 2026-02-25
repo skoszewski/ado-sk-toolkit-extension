@@ -21,6 +21,8 @@ For administrator-facing installation and usage guidance, see `overview.md`.
   - Downloads a blob to a local file path using the selected AzureRM service connection.
 - `PutBlob@1`
   - Uploads a local file as a blob using the selected AzureRM service connection.
+- `SetupGitHubRelease@1`
+  - Downloads and installs a binary from the latest GitHub release and prepends it to PATH.
 
 ## Repository layout
 
@@ -29,6 +31,7 @@ For administrator-facing installation and usage guidance, see `overview.md`.
 - `task/ListBlobs` - task implementation and manifest
 - `task/GetBlob` - task implementation and manifest
 - `task/PutBlob` - task implementation and manifest
+- `task/SetupGitHubRelease` - task implementation and manifest
 - `shared` - local npm package with shared OIDC/devops/blob helpers
 - `scripts/build.sh` - builds tasks and packages the extension
 - `examples/azure-pipelines-smoke.yml` - smoke pipeline example
