@@ -77,6 +77,10 @@ Publishing requires a Visual Studio Marketplace publisher and sharing the publis
 
 Slawomir Koszewski
 
+## AI Generated Content
+
+Parts of this repository were generated with the assistance of AI. The author has reviewed and edited the AI-generated content to ensure accuracy and clarity.
+
 ## License
 
 MIT. See `LICENSE`.
