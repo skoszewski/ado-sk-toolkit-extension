@@ -1,18 +1,26 @@
+import * as tl from 'azure-pipelines-task-lib/task';
 import {
   buildOidcUrl,
   exchangeOidcForScopedToken,
   getServiceConnectionMetadata,
   requestOidcToken
 } from './oidc';
-import { requireVariable } from './devops-helpers';
 
 export const STORAGE_SCOPE = 'https://storage.azure.com/.default';
 
 export async function requestStorageAccessToken(
   endpointId: string
 ): Promise<string> {
-  const oidcBaseUrl = requireVariable('System.OidcRequestUri');
-  const systemAccessToken = requireVariable('System.AccessToken');
+  const oidcBaseUrl = tl.getVariable('System.OidcRequestUri');
+  const systemAccessToken = tl.getVariable('System.AccessToken');
+
+  if (oidcBaseUrl === undefined) {
+    throw new Error('Missing required pipeline variable: System.OidcRequestUri.');
+  }
+
+  if (systemAccessToken === undefined) {
+    throw new Error('Missing required pipeline variable: System.AccessToken.');
+  }
 
   const metadata = getServiceConnectionMetadata(endpointId);
 

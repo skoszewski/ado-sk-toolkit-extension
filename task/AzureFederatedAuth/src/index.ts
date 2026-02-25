@@ -4,21 +4,27 @@ import {
   buildOidcUrl,
   exchangeOidcForScopedToken,
   getServiceConnectionMetadata,
-  requestOidcToken,
-  requireInput,
-  requireVariable
+  requestOidcToken
 } from '@skoszewski/ado-sk-toolkit-shared';
 
 const AZDO_APP_SCOPE = '499b84ac-1321-427f-aa17-267ca6975798/.default';
 
 async function run(): Promise<void> {
   try {
-    const endpointId = requireInput('serviceConnectionARM');
+    const endpointId = tl.getInputRequired('serviceConnectionARM');
     const setGitAccessToken = tl.getBoolInput('setGitAccessToken', false);
     const printTokenHashes = tl.getBoolInput('printTokenHashes', false);
 
-    const oidcBaseUrl = requireVariable('System.OidcRequestUri');
-    const accessToken = requireVariable('System.AccessToken');
+    const oidcBaseUrl = tl.getVariable('System.OidcRequestUri');
+    const accessToken = tl.getVariable('System.AccessToken');
+
+    if (oidcBaseUrl === undefined) {
+      throw new Error('Missing required pipeline variable: System.OidcRequestUri.');
+    }
+
+    if (accessToken === undefined) {
+      throw new Error('Missing required pipeline variable: System.AccessToken.');
+    }
 
     console.log('Requesting OIDC token for ARM authentication...');
 

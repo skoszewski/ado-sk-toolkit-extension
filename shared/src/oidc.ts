@@ -1,3 +1,5 @@
+import * as tl from 'azure-pipelines-task-lib/task';
+
 export type ServiceConnectionMetadata = {
   tenantId: string;
   clientId: string;
@@ -11,40 +13,25 @@ export type TokenResponse = {
 
 export const CLIENT_ASSERTION_TYPE = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-type TaskLibEndpointBridge = {
-  getEndpointAuthorizationParameter: (
-    endpointId: string,
-    key: string,
-    optional: boolean
-  ) => string | undefined;
-  getEndpointDataParameter: (endpointId: string, key: string, optional: boolean) => string | undefined;
-};
-
 type OidcResponse = {
   oidcToken?: string;
 };
 
-function getTaskLibEndpointBridge(): TaskLibEndpointBridge {
-  return require('azure-pipelines-task-lib/task') as TaskLibEndpointBridge;
-}
-
 export function getServiceConnectionMetadata(endpointId: string): ServiceConnectionMetadata {
-  const taskLib = getTaskLibEndpointBridge();
-
   const tenantId =
-    taskLib.getEndpointAuthorizationParameter(endpointId, 'tenantid', true) ||
-    taskLib.getEndpointDataParameter(endpointId, 'tenantid', true);
+    tl.getEndpointAuthorizationParameter(endpointId, 'tenantid', true) ||
+    tl.getEndpointDataParameter(endpointId, 'tenantid', true);
 
   const clientId =
-    taskLib.getEndpointAuthorizationParameter(endpointId, 'serviceprincipalid', true) ||
-    taskLib.getEndpointAuthorizationParameter(endpointId, 'clientid', true) ||
-    taskLib.getEndpointDataParameter(endpointId, 'serviceprincipalid', true);
+    tl.getEndpointAuthorizationParameter(endpointId, 'serviceprincipalid', true) ||
+    tl.getEndpointAuthorizationParameter(endpointId, 'clientid', true) ||
+    tl.getEndpointDataParameter(endpointId, 'serviceprincipalid', true);
 
-  if (!tenantId) {
+  if (tenantId === undefined) {
     throw new Error('Could not resolve tenant ID from the selected AzureRM service connection.');
   }
 
-  if (!clientId) {
+  if (clientId === undefined) {
     throw new Error('Could not resolve client ID from the selected AzureRM service connection.');
   }
 

@@ -1,8 +1,7 @@
 import * as tl from 'azure-pipelines-task-lib/task';
 import {
   buildBlobUrl,
-  requestStorageAccessToken,
-  requireInput
+  requestStorageAccessToken
 } from '@skoszewski/ado-sk-toolkit-shared';
 
 async function copyBlob(
@@ -38,12 +37,12 @@ async function copyBlob(
 
 async function run(): Promise<void> {
   try {
-    const endpointId = requireInput('serviceConnectionARM');
-    const srcStorageAccountName = requireInput('srcStorageAccountName');
-    const dstStorageAccountName = requireInput('dstStorageAccountName');
-    const srcContainerName = requireInput('srcContainerName');
-    const dstContainerNameInput = tl.getInput('dstContainerName', false)?.trim() || '';
-    const blobName = requireInput('blobName');
+    const endpointId = tl.getInputRequired('serviceConnectionARM');
+    const srcStorageAccountName = tl.getInputRequired('srcStorageAccountName');
+    const dstStorageAccountName = tl.getInputRequired('dstStorageAccountName');
+    const srcContainerName = tl.getInputRequired('srcContainerName');
+    const dstContainerNameInput = tl.getInput('dstContainerName', false) || '';
+    const blobName = tl.getInputRequired('blobName');
 
     console.log('Requesting storage access token from Microsoft Entra ID...');
     const accessToken = await requestStorageAccessToken(endpointId);

@@ -2,8 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as tl from 'azure-pipelines-task-lib/task';
 import {
   buildBlobUrl,
-  requestStorageAccessToken,
-  requireInput
+  requestStorageAccessToken
 } from '@skoszewski/ado-sk-toolkit-shared';
 
 async function uploadBlob(
@@ -35,12 +34,12 @@ async function uploadBlob(
 
 async function run(): Promise<void> {
   try {
-    const endpointId = requireInput('serviceConnectionARM');
-    const storageAccountName = requireInput('storageAccountName');
-    const containerName = requireInput('containerName');
-    const blobName = requireInput('blobName');
-    const sourcePath = requireInput('sourcePath');
-    const contentType = tl.getInput('contentType', false)?.trim() || 'application/octet-stream';
+    const endpointId = tl.getInputRequired('serviceConnectionARM');
+    const storageAccountName = tl.getInputRequired('storageAccountName');
+    const containerName = tl.getInputRequired('containerName');
+    const blobName = tl.getInputRequired('blobName');
+    const sourcePath = tl.getInputRequired('sourcePath');
+    const contentType = tl.getInput('contentType', false) || 'application/octet-stream';
 
     console.log('Requesting storage access token from Microsoft Entra ID...');
     const accessToken = await requestStorageAccessToken(endpointId);

@@ -1,7 +1,6 @@
 import * as tl from 'azure-pipelines-task-lib/task';
 import {
-  requestStorageAccessToken,
-  requireInput
+  requestStorageAccessToken
 } from '@skoszewski/ado-sk-toolkit-shared';
 
 function decodeXmlValue(value: string): string {
@@ -60,11 +59,11 @@ async function listBlobs(listUrl: string, bearerToken: string): Promise<string[]
 
 async function run(): Promise<void> {
   try {
-    const endpointId = requireInput('serviceConnectionARM');
-    const storageAccountName = requireInput('storageAccountName');
-    const containerName = requireInput('containerName');
-    const prefix = tl.getInput('prefix', false)?.trim() || '';
-    const maxResultsRaw = tl.getInput('maxResults', false)?.trim() || '1000';
+    const endpointId = tl.getInputRequired('serviceConnectionARM');
+    const storageAccountName = tl.getInputRequired('storageAccountName');
+    const containerName = tl.getInputRequired('containerName');
+    const prefix = tl.getInput('prefix', false) || '';
+    const maxResultsRaw = tl.getInput('maxResults', false) || '1000';
     const maxResults = Number.parseInt(maxResultsRaw, 10);
 
     if (!Number.isInteger(maxResults) || maxResults <= 0) {
