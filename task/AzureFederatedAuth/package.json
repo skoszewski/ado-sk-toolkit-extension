@@ -1,6 +1,6 @@
 {
   "name": "azure-federated-auth-task",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": true,
   "author": "Slawomir Koszewski",
   "license": "MIT",
