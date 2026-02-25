@@ -45,6 +45,10 @@ https://github.com/skoszewski/ado-sk-toolkit-extension.git
 
 Slawomir Koszewski
 
+## AI Generated Content
+
+Parts of this extension's source code were generated with the assistance of AI. The author has reviewed and edited the AI-generated content to ensure accuracy and clarity.
+
 ## License
 
 MIT. See `LICENSE`.
