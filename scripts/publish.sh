@@ -1,26 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -lt 3 ]]; then
-  echo "Usage: $0 <vsix-path> <publisher-id> <org1> [org2] [org3] ..."
-  echo "Requires environment variable AZDO_PAT to be set."
-  exit 1
-fi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+set -a
+source "$SCRIPT_DIR/.env"
+set +a
 
 if [[ -z "${AZDO_PAT:-}" ]]; then
   echo "AZDO_PAT is not set."
   exit 1
 fi
 
-VSIX_PATH="$1"
-PUBLISHER_ID="$2"
-shift 2
+VSIX_PATH="$SCRIPT_DIR/build/${PUBLISHER_ID}.${EXTENSION_ID}-${EXTENSION_VERSION}.vsix"
 
-for ORG in "$@"; do
-  echo "Publishing to organization: $ORG"
-  npx tfx-cli extension publish \
-    --vsix "$VSIX_PATH" \
-    --publisher "$PUBLISHER_ID" \
-    --token "$AZDO_PAT" \
-    --share-with "$ORG"
-done
+if [[ ! -f "$VSIX_PATH" ]]; then
+  echo "VSIX file not found at path: $VSIX_PATH"
+  exit 1
+fi
+
+echo "Publishing to organization: $ORG"
+tfx extension publish \
+  --vsix "$VSIX_PATH" \
+  --publisher "$PUBLISHER_ID" \
+  --token "$AZDO_PAT" \
+  --share-with "$ORG"
