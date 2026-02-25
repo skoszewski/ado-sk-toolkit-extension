@@ -39,7 +39,7 @@ Implementation note: task shared helpers are packaged locally during build and b
 
 ## Repository
 
-https://gitea.koszewscy.waw.pl/koszewscy/ado-sk-toolkit-extension.git
+https://github.com/skoszewski/ado-sk-toolkit-extension.git
 
 ## Author
 

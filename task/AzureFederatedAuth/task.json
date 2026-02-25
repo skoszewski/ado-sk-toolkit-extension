@@ -4,7 +4,7 @@
   "name": "AzureFederatedAuth",
   "friendlyName": "Azure Federated Auth",
   "description": "Gets OIDC token and sets ARM vars (optionally GIT_ACCESS_TOKEN).",
-  "helpMarkDown": "For details, see: https://gitea.koszewscy.waw.pl/koszewscy/ado-azurefederatedauth-task.git",
+  "helpMarkDown": "For details, see: https://github.com/skoszewski/ado-sk-toolkit-extension.git",
   "category": "Deploy",
   "author": "Slawomir Koszewski",
   "version": {
