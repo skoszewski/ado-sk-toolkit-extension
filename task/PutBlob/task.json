@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "247df91a-702e-4934-a6f2-c2f784f2f83a",
+  "name": "PutBlob",
+  "friendlyName": "Put Blob",
+  "description": "Uploads a local file as a blob to Azure Storage using OIDC from the selected AzureRM service connection.",
+  "helpMarkDown": "Uses serviceConnectionARM to request OIDC token and upload blob via Azure Storage REST API.",
+  "category": "Deploy",
+  "author": "Slawomir Koszewski",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Put blob: $(storageAccountName)/$(containerName)/$(blobName)",
+  "inputs": [
+    {
+      "name": "serviceConnectionARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Resource Manager service connection",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "AzureRM service connection used to request OIDC token and resolve tenant/client metadata. Requires System.AccessToken to be available to the job."
+    },
+    {
+      "name": "storageAccountName",
+      "type": "string",
+      "label": "Storage Account Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Storage account name (without domain)."
+    },
+    {
+      "name": "containerName",
+      "type": "string",
+      "label": "Container Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Container name."
+    },
+    {
+      "name": "blobName",
+      "type": "string",
+      "label": "Blob Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Blob path/name to create or overwrite."
+    },
+    {
+      "name": "sourcePath",
+      "type": "filePath",
+      "label": "Source Path",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Local file path to upload."
+    },
+    {
+      "name": "contentType",
+      "type": "string",
+      "label": "Content Type",
+      "defaultValue": "application/octet-stream",
+      "required": false,
+      "helpMarkDown": "Optional HTTP content type for uploaded blob."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "dist/PutBlob/src/index.js"
+    }
+  },
+  "minimumAgentVersion": "3.225.0"
+}

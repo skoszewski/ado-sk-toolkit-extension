@@ -1,6 +1,6 @@
 # SK Azure DevOps Toolkit
 
-Azure DevOps extension with two pipeline tasks:
+Azure DevOps extension with pipeline tasks for federated auth and blob/state operations:
 
 - `AzureFederatedAuth@1` - requests OIDC token for an AzureRM service connection (workload identity federation) and sets:
   - `ARM_OIDC_TOKEN` (secret)
@@ -8,6 +8,11 @@ Azure DevOps extension with two pipeline tasks:
   - `ARM_CLIENT_ID`
   - `GIT_ACCESS_TOKEN` (secret, optional)
 - `CopyBlob@1` - copies a blob between Azure Storage accounts/containers using the selected AzureRM service connection.
+- `ListBlobs@1` - lists blobs in a container (optional prefix) using the selected AzureRM service connection.
+- `GetBlob@1` - downloads a blob to a local file path using the selected AzureRM service connection.
+- `PutBlob@1` - uploads a local file as a blob using the selected AzureRM service connection.
+
+Implementation note: task shared helpers are packaged locally during build and bundled with the extension (no external package registry access required at runtime).
 
 ## Prerequisites
 

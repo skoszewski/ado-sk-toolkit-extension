@@ -1,11 +1,15 @@
 {
-  "name": "azure-federated-auth-task",
-  "version": "1.0.8",
+  "name": "@skoszewski/ado-sk-toolkit-shared",
+  "version": "1.0.0",
   "private": true,
   "author": "Slawomir Koszewski",
   "license": "MIT",
-  "description": "Azure DevOps task to fetch OIDC token for AzureRM service connection.",
+  "description": "Shared helpers for SK Azure DevOps Toolkit tasks.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "clean": "rm -rf dist"

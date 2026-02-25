@@ -4,31 +4,27 @@ import {
   buildOidcUrl,
   exchangeOidcForScopedToken,
   getServiceConnectionMetadata,
-  requireInput,
   requestOidcToken,
+  requireInput,
   requireVariable
-} from '../../_shared/src/oidc';
+} from '@skoszewski/ado-sk-toolkit-shared';
 
 const AZDO_APP_SCOPE = '499b84ac-1321-427f-aa17-267ca6975798/.default';
 
 async function run(): Promise<void> {
   try {
-    const endpointId = requireInput('serviceConnectionARM', tl.getInput);
+    const endpointId = requireInput('serviceConnectionARM');
     const setGitAccessToken = tl.getBoolInput('setGitAccessToken', false);
     const printTokenHashes = tl.getBoolInput('printTokenHashes', false);
 
-    const oidcBaseUrl = requireVariable('System.OidcRequestUri', tl.getVariable);
-    const accessToken = requireVariable('System.AccessToken', tl.getVariable);
+    const oidcBaseUrl = requireVariable('System.OidcRequestUri');
+    const accessToken = requireVariable('System.AccessToken');
 
     console.log('Requesting OIDC token for ARM authentication...');
 
     const requestUrl = buildOidcUrl(oidcBaseUrl, endpointId);
     const token = await requestOidcToken(requestUrl, accessToken, true);
-    const metadata = getServiceConnectionMetadata(
-      endpointId,
-      tl.getEndpointAuthorizationParameter,
-      tl.getEndpointDataParameter
-    );
+    const metadata = getServiceConnectionMetadata(endpointId);
 
     tl.setVariable('ARM_OIDC_TOKEN', token, true);
     tl.setVariable('ARM_TENANT_ID', metadata.tenantId);

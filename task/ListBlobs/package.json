@@ -1,10 +1,10 @@
 {
-  "name": "azure-federated-auth-task",
-  "version": "1.0.8",
+  "name": "list-blobs-task",
+  "version": "1.0.0",
   "private": true,
   "author": "Slawomir Koszewski",
   "license": "MIT",
-  "description": "Azure DevOps task to fetch OIDC token for AzureRM service connection.",
+  "description": "Azure DevOps task to list blobs in an Azure Storage container.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",

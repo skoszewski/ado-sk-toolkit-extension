@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "sk-azure-devops-toolkit",
   "name": "SK Azure DevOps Toolkit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "skoszewski-lab",
   "targets": [
     {
@@ -28,6 +28,15 @@
     },
     {
       "path": "task/CopyBlob"
+    },
+    {
+      "path": "task/ListBlobs"
+    },
+    {
+      "path": "task/GetBlob"
+    },
+    {
+      "path": "task/PutBlob"
     },
     {
       "path": "images",
@@ -57,6 +66,36 @@
       ],
       "properties": {
         "name": "task/CopyBlob"
+      }
+    },
+    {
+      "id": "c6c7b21a-2e53-442a-8c44-bf9c8f1f281e",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "task/ListBlobs"
+      }
+    },
+    {
+      "id": "5484f889-0b9d-4cf7-b4f1-f6112f1163f5",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "task/GetBlob"
+      }
+    },
+    {
+      "id": "09e34720-d862-4d34-bf5e-7d8f29d61b67",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "task/PutBlob"
       }
     }
   ]

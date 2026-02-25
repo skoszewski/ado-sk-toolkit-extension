@@ -15,12 +15,21 @@ For administrator-facing installation and usage guidance, see `overview.md`.
     - `GIT_ACCESS_TOKEN` (secret, optional)
 - `CopyBlob@1`
   - Copies a blob between Azure Storage accounts/containers using the selected AzureRM service connection.
+- `ListBlobs@1`
+  - Lists blobs in a container (optional prefix) using the selected AzureRM service connection.
+- `GetBlob@1`
+  - Downloads a blob to a local file path using the selected AzureRM service connection.
+- `PutBlob@1`
+  - Uploads a local file as a blob using the selected AzureRM service connection.
 
 ## Repository layout
 
 - `task/AzureFederatedAuth` - task implementation and manifest
 - `task/CopyBlob` - task implementation and manifest
-- `task/_shared` - shared OIDC/auth helpers used by tasks
+- `task/ListBlobs` - task implementation and manifest
+- `task/GetBlob` - task implementation and manifest
+- `task/PutBlob` - task implementation and manifest
+- `shared` - local npm package with shared OIDC/devops/blob helpers
 - `scripts/build.sh` - builds tasks and packages the extension
 - `examples/azure-pipelines-smoke.yml` - smoke pipeline example
 
@@ -31,11 +40,10 @@ Prerequisites:
 - Node.js (LTS)
 - npm
 
-Install dependencies (per task):
+Install dependencies:
 
 ```bash
-cd task/AzureFederatedAuth && npm install
-cd ../CopyBlob && npm install
+npm install
 ```
 
 Build and package extension:
@@ -44,8 +52,16 @@ Build and package extension:
 ./scripts/build.sh
 ```
 
+Build flow details:
+
+- builds `shared` package,
+- packs it to `build/ado-sk-toolkit-shared.tgz`,
+- installs that tarball into each task,
+- compiles all tasks and creates VSIX.
+
 Build output:
 
+- shared package tarball in `build/ado-sk-toolkit-shared.tgz`
 - Task JavaScript output in each task's `dist/`
 - Extension package (`.vsix`) in `build/`
 

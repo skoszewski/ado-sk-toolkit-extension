@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "15d07dc4-715e-4dfd-a5e8-5b2ef0a5f0e8",
+  "name": "GetBlob",
+  "friendlyName": "Get Blob",
+  "description": "Downloads a blob from Azure Storage using OIDC from the selected AzureRM service connection.",
+  "helpMarkDown": "Uses serviceConnectionARM to request OIDC token and download blob via Azure Storage REST API.",
+  "category": "Deploy",
+  "author": "Slawomir Koszewski",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Get blob: $(storageAccountName)/$(containerName)/$(blobName)",
+  "inputs": [
+    {
+      "name": "serviceConnectionARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure Resource Manager service connection",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "AzureRM service connection used to request OIDC token and resolve tenant/client metadata. Requires System.AccessToken to be available to the job."
+    },
+    {
+      "name": "storageAccountName",
+      "type": "string",
+      "label": "Storage Account Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Storage account name (without domain)."
+    },
+    {
+      "name": "containerName",
+      "type": "string",
+      "label": "Container Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Container name."
+    },
+    {
+      "name": "blobName",
+      "type": "string",
+      "label": "Blob Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Blob path/name to download."
+    },
+    {
+      "name": "destinationPath",
+      "type": "filePath",
+      "label": "Destination Path",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Local file path where blob content will be written."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "dist/GetBlob/src/index.js"
+    }
+  },
+  "minimumAgentVersion": "3.225.0"
+}

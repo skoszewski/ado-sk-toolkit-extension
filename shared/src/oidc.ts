@@ -11,45 +11,34 @@ export type TokenResponse = {
 
 export const CLIENT_ASSERTION_TYPE = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
 
-type VariableProvider = (name: string) => string | undefined;
-type EndpointParamProvider = (endpointId: string, key: string, optional: boolean) => string | undefined;
-type InputProvider = (name: string, required?: boolean) => string | undefined;
+type TaskLibEndpointBridge = {
+  getEndpointAuthorizationParameter: (
+    endpointId: string,
+    key: string,
+    optional: boolean
+  ) => string | undefined;
+  getEndpointDataParameter: (endpointId: string, key: string, optional: boolean) => string | undefined;
+};
 
 type OidcResponse = {
   oidcToken?: string;
 };
 
-export function requireVariable(name: string, getVariable: VariableProvider): string {
-  const value = getVariable(name);
-  if (!value) {
-    throw new Error(`Missing required pipeline variable: ${name}.`);
-  }
-
-  return value.trim();
+function getTaskLibEndpointBridge(): TaskLibEndpointBridge {
+  return require('azure-pipelines-task-lib/task') as TaskLibEndpointBridge;
 }
 
-export function requireInput(name: string, getInput: InputProvider): string {
-  const value = getInput(name, true);
-  if (!value) {
-    throw new Error(`Task input ${name} is required.`);
-  }
+export function getServiceConnectionMetadata(endpointId: string): ServiceConnectionMetadata {
+  const taskLib = getTaskLibEndpointBridge();
 
-  return value.trim();
-}
-
-export function getServiceConnectionMetadata(
-  endpointId: string,
-  getEndpointAuthorizationParameter: EndpointParamProvider,
-  getEndpointDataParameter: EndpointParamProvider
-): ServiceConnectionMetadata {
   const tenantId =
-    getEndpointAuthorizationParameter(endpointId, 'tenantid', true) ||
-    getEndpointDataParameter(endpointId, 'tenantid', true);
+    taskLib.getEndpointAuthorizationParameter(endpointId, 'tenantid', true) ||
+    taskLib.getEndpointDataParameter(endpointId, 'tenantid', true);
 
   const clientId =
-    getEndpointAuthorizationParameter(endpointId, 'serviceprincipalid', true) ||
-    getEndpointAuthorizationParameter(endpointId, 'clientid', true) ||
-    getEndpointDataParameter(endpointId, 'serviceprincipalid', true);
+    taskLib.getEndpointAuthorizationParameter(endpointId, 'serviceprincipalid', true) ||
+    taskLib.getEndpointAuthorizationParameter(endpointId, 'clientid', true) ||
+    taskLib.getEndpointDataParameter(endpointId, 'serviceprincipalid', true);
 
   if (!tenantId) {
     throw new Error('Could not resolve tenant ID from the selected AzureRM service connection.');
