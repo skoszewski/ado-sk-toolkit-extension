@@ -65,7 +65,7 @@
   ],
   "execution": {
     "Node20_1": {
-      "target": "dist/index.js"
+      "target": "dist/CopyBlob/src/index.js"
     }
   },
   "minimumAgentVersion": "3.225.0"

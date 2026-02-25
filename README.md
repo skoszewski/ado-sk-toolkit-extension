@@ -1,81 +1,61 @@
-# Azure DevOps Federated Auth Toolkit
+# SK Azure DevOps Toolkit
 
-Azure DevOps extension with two tasks:
+Developer README for the Azure DevOps extension codebase.
+
+For administrator-facing installation and usage guidance, see `overview.md`.
+
+## Tasks in this extension
 
 - `AzureFederatedAuth@1`
+  - Requests an OIDC token for a selected AzureRM service connection (workload identity federation).
+  - Exports:
+    - `ARM_OIDC_TOKEN` (secret)
+    - `ARM_TENANT_ID`
+    - `ARM_CLIENT_ID`
+    - `GIT_ACCESS_TOKEN` (secret, optional)
 - `CopyBlob@1`
+  - Copies a blob between Azure Storage accounts/containers using the selected AzureRM service connection.
 
-`AzureFederatedAuth@1` requests an OIDC token for a selected AzureRM service connection and exports:
+## Repository layout
 
-- `ARM_OIDC_TOKEN` (secret)
-- `ARM_TENANT_ID`
-- `ARM_CLIENT_ID`
-- `GIT_ACCESS_TOKEN` (secret, optional)
+- `task/AzureFederatedAuth` - task implementation and manifest
+- `task/CopyBlob` - task implementation and manifest
+- `task/_shared` - shared OIDC/auth helpers used by tasks
+- `scripts/build.sh` - builds tasks and packages the extension
+- `examples/azure-pipelines-smoke.yml` - smoke pipeline example
 
-## Requirements
+## Local development
 
-- Linux agents (YAML pipelines)
-- Job setting that exposes OAuth token (`System.AccessToken`)
-- AzureRM service connection with workload identity federation
-- Visual Studio Marketplace publisher account (required to publish/share this extension, including org-only usage)
+Prerequisites:
 
-## Build
+- Node.js (LTS)
+- npm
+
+Install dependencies (per task):
+
+```bash
+cd task/AzureFederatedAuth && npm install
+cd ../CopyBlob && npm install
+```
+
+Build and package extension:
 
 ```bash
 ./scripts/build.sh
 ```
 
-This builds the TypeScript task and creates a `.vsix` extension package in `build/`.
+Build output:
 
-## Publish privately
+- Task JavaScript output in each task's `dist/`
+- Extension package (`.vsix`) in `build/`
 
-Publishing (CLI or Web UI) uses the same model:
-- Upload extension version under a Visual Studio Marketplace publisher
-- Share that published extension with your Azure DevOps organization(s)
+## Validation pipeline
 
-There is no direct local `.vsix` install path to an org that bypasses the publisher model.
+Use `examples/azure-pipelines-smoke.yml` to validate task execution end-to-end in Azure Pipelines.
 
-```bash
-AZDO_PAT='<your-pat>' ./scripts/publish.sh <vsix-path> <publisher-id> <org1> <org2> <org3>
-```
+## Publishing notes (maintainers)
 
-Example:
-
-```bash
-AZDO_PAT="$AZDO_PAT" ./scripts/publish.sh ./build/skoszewski-lab.azuredevops-get-oidc-token-task-1.0.5.vsix skoszewski-lab org-a org-b org-c
-```
-
-### Manual publish (Web UI)
-
-You can publish the generated `.vsix` manually in the Visual Studio Marketplace publisher portal:
-
-1. Build/package first (`./scripts/build.sh`) and note the `.vsix` path.
-2. Open your publisher in Visual Studio Marketplace.
-3. Upload the `.vsix` as a new extension version.
-4. Share the published extension with the target Azure DevOps organization(s).
-
-## YAML usage
-
-```yaml
-- task: AzureFederatedAuth@1
-  inputs:
-    serviceConnectionARM: 'my-arm-service-connection'
-    setGitAccessToken: true
-    printTokenHashes: false
-
-- task: CopyBlob@1
-  inputs:
-    serviceConnectionARM: 'my-arm-service-connection'
-    srcStorageAccountName: 'srcaccount'
-    dstStorageAccountName: 'dstaccount'
-    srcContainerName: 'tfstate'
-    dstContainerName: 'tfstate-backup'
-    blobName: 'lz.tfstate'
-```
-
-See `examples/azure-pipelines-smoke.yml` for a full smoke validation pipeline.
-
-When `setGitAccessToken: true`, the task exchanges the OIDC assertion against Entra ID and requests scope `499b84ac-1321-427f-aa17-267ca6975798/.default`, then sets `GIT_ACCESS_TOKEN`.
+Publishing requires a Visual Studio Marketplace publisher and sharing the published extension with target Azure DevOps organizations.
 
 ## Author
 
