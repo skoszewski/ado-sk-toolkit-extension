@@ -1,0 +1,85 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "950311ab-f037-4f4f-a875-8a4251e2dbd5",
+  "name": "SetupGitHubRelease",
+  "friendlyName": "Setup GitHub Release",
+  "description": "Downloads and installs a binary from the latest GitHub release and adds it to PATH.",
+  "helpMarkDown": "Matches release assets by platform and architecture, downloads, extracts, locates the binary, caches it, and prepends its directory to PATH.",
+  "category": "Utility",
+  "author": "Slawomir Koszewski",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 0
+  },
+  "instanceNameFormat": "Setup GitHub release from $(repository)",
+  "inputs": [
+    {
+      "name": "repository",
+      "type": "string",
+      "label": "Repository",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "GitHub repository in owner/repo format."
+    },
+    {
+      "name": "fileName",
+      "type": "string",
+      "label": "File Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Asset name or regex prefixed with ~."
+    },
+    {
+      "name": "binaryName",
+      "type": "string",
+      "label": "Binary Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Binary name or regex prefixed with ~. Defaults to repository name."
+    },
+    {
+      "name": "fileType",
+      "type": "string",
+      "label": "File Type",
+      "defaultValue": "archive",
+      "required": false,
+      "helpMarkDown": "archive, package, or custom regex pattern for file extension matching."
+    },
+    {
+      "name": "updateCache",
+      "type": "pickList",
+      "label": "Update Cache",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "false: use any cached version. true: use current latest release and cache if needed. always: always download latest and refresh cache.",
+      "options": {
+        "false": "false",
+        "true": "true",
+        "always": "always"
+      }
+    },
+    {
+      "name": "debug",
+      "type": "boolean",
+      "label": "Debug",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Logs discovered files while searching for the binary."
+    },
+    {
+      "name": "token",
+      "type": "string",
+      "label": "GitHub Token",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Optional GitHub token for private repos or higher API limits. If empty, uses GITHUB_TOKEN if available."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "dist/SetupGitHubRelease/src/index.js"
+    }
+  },
+  "minimumAgentVersion": "3.225.0"
+}

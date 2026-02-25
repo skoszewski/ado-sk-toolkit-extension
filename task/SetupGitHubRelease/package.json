@@ -1,0 +1,23 @@
+{
+  "name": "setup-github-release-task",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Slawomir Koszewski",
+  "license": "MIT",
+  "description": "Azure DevOps task to download and install the latest release asset from GitHub.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "azure-pipelines-task-lib": "^5.2.6"
+  },
+  "overrides": {
+    "minimatch": "3.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.5"
+  }
+}
