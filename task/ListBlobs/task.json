@@ -10,7 +10,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 0
+    "Patch": 1
   },
   "instanceNameFormat": "List blobs: $(storageAccountName)/$(containerName)",
   "inputs": [
@@ -45,6 +45,14 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Optional blob name prefix used to filter results."
+    },
+    {
+      "name": "maxResults",
+      "type": "string",
+      "label": "Maximum Blob Count",
+      "defaultValue": "1000",
+      "required": false,
+      "helpMarkDown": "Maximum number of blobs to return. Default is 1000."
     }
   ],
   "execution": {

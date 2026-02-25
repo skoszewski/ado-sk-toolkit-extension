@@ -26,10 +26,11 @@ function parseBlobNames(xml: string): string[] {
   return names;
 }
 
-function buildListUrl(storageAccountName: string, containerName: string, prefix: string): string {
+function buildListUrl(storageAccountName: string, containerName: string, prefix: string, maxResults: number): string {
   const url = new URL(`https://${storageAccountName}.blob.core.windows.net/${encodeURIComponent(containerName)}`);
   url.searchParams.set('restype', 'container');
   url.searchParams.set('comp', 'list');
+  url.searchParams.set('maxresults', String(maxResults));
 
   if (prefix) {
     url.searchParams.set('prefix', prefix);
@@ -63,12 +64,18 @@ async function run(): Promise<void> {
     const storageAccountName = requireInput('storageAccountName');
     const containerName = requireInput('containerName');
     const prefix = tl.getInput('prefix', false)?.trim() || '';
+    const maxResultsRaw = tl.getInput('maxResults', false)?.trim() || '1000';
+    const maxResults = Number.parseInt(maxResultsRaw, 10);
+
+    if (!Number.isInteger(maxResults) || maxResults <= 0) {
+      throw new Error(`Invalid maxResults value: ${maxResultsRaw}. Expected a positive integer.`);
+    }
 
     console.log('Requesting storage access token from Microsoft Entra ID...');
     const accessToken = await requestStorageAccessToken(endpointId);
 
-    const listUrl = buildListUrl(storageAccountName, containerName, prefix);
-    const blobNames = await listBlobs(listUrl, accessToken);
+    const listUrl = buildListUrl(storageAccountName, containerName, prefix, maxResults);
+    const blobNames = (await listBlobs(listUrl, accessToken)).slice(0, maxResults);
 
     const serialized = JSON.stringify(blobNames);
     tl.setVariable('LIST_BLOBS_JSON', serialized);
