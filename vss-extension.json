@@ -39,6 +39,9 @@
       "path": "task/PutBlob"
     },
     {
+      "path": "task/SetupGitHubRelease"
+    },
+    {
       "path": "images",
       "addressable": true
     },
@@ -96,6 +99,16 @@
       ],
       "properties": {
         "name": "task/PutBlob"
+      }
+    },
+    {
+      "id": "289ace53-1fe2-45c7-abf2-a8e8fb57552d",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "task/SetupGitHubRelease"
       }
     }
   ]
